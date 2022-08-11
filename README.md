@@ -25,27 +25,27 @@ Resultado: Hello World!!!
 
 2. Prueba en Localhost.
 ```
-localhost:5000
+curl localhost:5000
 
 Resultado: Hello World!!!
 ```
 
 3. Prueba en Localhost counter.
 ```
-GET localhost:5000/counter
+curl -X GET localhost:5000/counter
 
 Resultado: No hay peticiones...
 ```
 
 4. Prueba en Localhost counter.
 ```
-POST localhost:5000/counter
+curl -X POST localhost:5000/counter
 
 Resultado: 1
 ```
 
 5. Prueba en Localhost counter.
 ```
-GET localhost:5000/counter
+curl -X GET localhost:5000/counter
 
 Resultado: Hay 1 peticiones...
