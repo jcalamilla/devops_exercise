@@ -1,0 +1,74 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-exercise
+  namespace: default
+  labels:
+    app: devops-exercise
+    service: devops-exercise
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 5000
+    name: http
+  selector:
+    app: devops-exercise
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-exercise
+  namespace: default
+  labels:
+    app: devops-exercise
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: devops-exercise
+  template:
+    metadata:
+      labels:
+        app: devops-exercise
+    spec:
+      containers:
+        - name: devops-exercise
+          imagePullPolicy: Always
+          image: jcalamilla/devops_exercise:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+          - name: counter
+            mountPath: /opt
+      volumes:
+      - hostPath:
+          path: /opt
+        name: counter
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: devops-exercise
+  namespace: default
+spec:
+  maxReplicas: 4
+  minReplicas: 1
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 75
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: devops-exercise
