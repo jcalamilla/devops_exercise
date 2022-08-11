@@ -10,7 +10,7 @@ docker build -t <TAG> .
 docker run -p 5000:5000 -d <IMAGE_NAME>
 ```
 
-## Probando imagen
+## Probando imagenapp
 
 1. Prueba dentro del contenedor.
 ```
@@ -29,3 +29,23 @@ localhost:5000
 
 Resultado: Hello World!!!
 ```
+
+3. Prueba en Localhost counter.
+```
+GET localhost:5000/counter
+
+Resultado: No hay peticiones...
+```
+
+4. Prueba en Localhost counter.
+```
+POST localhost:5000/counter
+
+Resultado: 1
+```
+
+5. Prueba en Localhost counter.
+```
+GET localhost:5000/counter
+
+Resultado: Hay 1 peticiones...
